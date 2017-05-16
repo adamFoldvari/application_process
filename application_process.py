@@ -17,9 +17,7 @@ except Exception as e:
 
 
 def query_1():
-    # run a SELECT statement
     cursor.execute("""SELECT first_name, last_name FROM mentors;""")
-    # Fetch and print the result of the last execution
     table = cursor.fetchall()
     consol_functions.pprint_table(table)
 
@@ -70,17 +68,32 @@ def query_7():
 
 
 def main():
-    # print('query1 :-----------------------------------------------------------------')
-    # query_1()
-    # print('query2:------------------------------------------------------------------')
-    # query_2()
-    # print'query3:--------------------------------------------------------------------')
-    # query_3()
-    # print'query4:--------------------------------------------------------------------')
-    # query_4()
-    # query_5()
-    # query_6()
-    query_7()
+    menu_switcher = True
+    while menu_switcher:
+        consol_functions.menu()
+        menu_number = consol_functions.menu_input()
+        if menu_number == 1:
+            query_1()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 2:
+            query_2()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 3:
+            query_3()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 4:
+            query_4()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 5:
+            query_5()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 6:
+            query_6()
+            menu_switcher = consol_functions.back_or_exit()
+        elif menu_number == 7:
+            query_7()
+            menu_switcher = consol_functions.back_or_exit()
+
 
 if __name__ == '__main__':
     main()

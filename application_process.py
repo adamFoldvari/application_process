@@ -52,6 +52,23 @@ def query_5():
     consol_functions.pprint_table(table)
 
 
+def query_6():
+    cursor.execute("""UPDATE applicants
+                      SET phone_number = '003670/223-7459'
+                      WHERE first_name = 'Jemima' AND last_name = 'Foreman';""")
+    cursor.execute("""SELECT first_name, last_name, phone_number FROM applicants
+                      WHERE first_name = 'Jemima' AND last_name = 'Foreman';""")
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
+
+
+def query_7():
+    cursor.execute("""DELETE FROM applicants
+                    WHERE email LIKE '%mauriseu.net';""")
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
+
+
 def main():
     # print('query1 :-----------------------------------------------------------------')
     # query_1()
@@ -61,6 +78,9 @@ def main():
     # query_3()
     # print'query4:--------------------------------------------------------------------')
     # query_4()
-    query_5()
+    # query_5()
+    # query_6()
+    query_7()
+
 if __name__ == '__main__':
     main()

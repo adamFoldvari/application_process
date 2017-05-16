@@ -31,13 +31,23 @@ def query_2():
 
 
 def query_3():
-    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number FROM applicants WHERE first_name = 'Carol';""")
+    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number
+                      FROM applicants WHERE first_name = 'Carol';""")
     table = cursor.fetchall()
     consol_functions.pprint_table(table)
 
 
 def query_4():
-    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';""")
+    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number
+                      FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';""")
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
+
+
+def query_5():
+    cursor.execute("""INSERT INTO applicants (first_name, last_name, phone_number, email, application_code)
+                      VALUES ('Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823);""")
+    cursor.execute("""SELECT * FROM applicants WHERE application_code = 54823 ;""")
     table = cursor.fetchall()
     consol_functions.pprint_table(table)
 
@@ -50,7 +60,7 @@ def main():
     # print'query3:--------------------------------------------------------------------')
     # query_3()
     # print'query4:--------------------------------------------------------------------')
-    query_4()
-
+    # query_4()
+    query_5()
 if __name__ == '__main__':
     main()

@@ -36,13 +36,21 @@ def query_3():
     consol_functions.pprint_table(table)
 
 
+def query_4():
+    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';""")
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
+
+
 def main():
     # print('query1 :-----------------------------------------------------------------')
     # query_1()
     # print('query2:------------------------------------------------------------------')
     # query_2()
     # print'query3:--------------------------------------------------------------------')
-    query_3()
+    # query_3()
+    # print'query4:--------------------------------------------------------------------')
+    query_4()
 
 if __name__ == '__main__':
     main()

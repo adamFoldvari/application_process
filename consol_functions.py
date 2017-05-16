@@ -1,6 +1,7 @@
 
 
 def pprint_table(table):
+    print("\033c")
     for rows in table:
         for item in rows:
             print(item, end=' ')
@@ -8,6 +9,7 @@ def pprint_table(table):
 
 
 def menu():
+    print("\033c")
     query_list = ['Mentors full name',
                   'Nicknames of mentors from Miskolc',
                   'Carols phone number',

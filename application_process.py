@@ -1,4 +1,5 @@
 import psycopg2
+import consol_functions
 
 
 try:
@@ -19,15 +20,21 @@ def query_1():
     # run a SELECT statement
     cursor.execute("""SELECT first_name, last_name FROM mentors;""")
     # Fetch and print the result of the last execution
-    rows = cursor.fetchall()
-    for names in rows:
-        for name in names:
-            print(name, end=' ')
-        print('\n')
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
+
+
+def query_2():
+    cursor.execute("""SELECT nick_name FROM mentors WHERE city = 'Miskolc';""")
+    table = cursor.fetchall()
+    consol_functions.pprint_table(table)
 
 
 def main():
+    print('query1 :-----------------------------------------------------------------')
     query_1()
+    print('query2:------------------------------------------------------------------')
+    query_2()
 
 if __name__ == '__main__':
     main()

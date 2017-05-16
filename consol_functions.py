@@ -8,7 +8,7 @@ def pprint_table(table):
 
 
 def menu():
-    query_list = ['Mentors full name', 
+    query_list = ['Mentors full name',
                   'Nicknames of mentors from Miskolc',
                   'Carols phone number',
                   'Adipiscingenimmi University students phone number',
@@ -16,7 +16,7 @@ def menu():
                   'Update Jemimas phone number',
                   'Delete mauriseu kids']
     for number, title in enumerate(query_list):
-        print('{0}. {1}'.format(number+1, title))
+        print('{0}. {1}'.format(number + 1, title))
     print('\n')
 
 
@@ -39,6 +39,3 @@ def back_or_exit():
         return False
     else:
         return True
-
-if __name__ == '__main__':
-    menu_input()

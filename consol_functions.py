@@ -1,5 +1,5 @@
 
-def pprint_table(table):
+def pprint_table(table=['We did the asked query, nothing to print!']):
     print("\033c")
     for rows in table:
         for item in rows:

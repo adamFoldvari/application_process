@@ -2,72 +2,71 @@ import psycopg2
 import consol_functions
 
 
-try:
-    # setup connection string
-    connect_str = "dbname='foldadam' user='adamfoldvari' host='localhost' password='9947ADam'"
-    # use our connection values to establish a connection
-    connection = psycopg2.connect(connect_str)
-    # set autocommit option, to do every query when we call it
-    connection.autocommit = True
-    # create a psycopg2 cursor that can execute queries
-    cursor = connection.cursor()
-
-except Exception as e:
-    print("Uh oh, can't connect. Invalid dbname, user or password?")
-    print(e)
-
-
-def close_connection():
-    if connection:
-        connection.close()
+def query_handler(query_index):
+    all_query = [query_1(),
+                 query_2(),
+                 query_3(),
+                 query_4(),
+                 query_5(),
+                 query_6(),
+                 query_7()
+                 ]
+    try:
+        connection = None
+        connect_str = "dbname='foldadam' user='adamfoldvari' host='localhost' password='9947ADam'"
+        connection = psycopg2.connect(connect_str)
+        connection.autocommit = True
+        cursor = connection.cursor()
+        cursor.execute(all_query[query_index])
+        table = cursor.fetchall()
+        consol_functions.pprint_table(table)
+    except psycopg2.OperationalError as exception:
+        print('Wrong username or password!')
+    except psycopg2.ProgrammingError as exception:
+        print("\033c")
+        print(exception)
+        print('We did the requested query, but nothing to print')
+    except psycopg2.IntegrityError as exception:
+        print("\033c")
+        print('We already added this row before!')
+    finally:
+        if connection:
+            connection.close()
 
 
 def query_1():
-    cursor.execute("""SELECT first_name, last_name FROM mentors;""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
-    close_connection()
+    return """SELECT first_name, last_name FROM mentors;"""
 
 
 def query_2():
-    cursor.execute("""SELECT nick_name FROM mentors WHERE city = 'Miskolc';""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
+    return """SELECT nick_name FROM mentors WHERE city = 'Miskolc';"""
 
 
 def query_3():
-    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number
-                      FROM applicants WHERE first_name = 'Carol';""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
+    return """SELECT first_name ||' '|| last_name, phone_number
+                      FROM applicants WHERE first_name = 'Carol';"""
 
 
 def query_4():
-    cursor.execute("""SELECT first_name ||' '|| last_name, phone_number
-                      FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
+    return """SELECT first_name ||' '|| last_name, phone_number
+                      FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';"""
 
 
 def query_5():
-    cursor.execute("""INSERT INTO applicants (first_name, last_name, phone_number, email, application_code)
-                      VALUES ('Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823);""")
-    cursor.execute("""SELECT * FROM applicants WHERE application_code = 54823 ;""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
+    return """INSERT INTO applicants (first_name, last_name, phone_number, email, application_code)
+                      VALUES ('Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823);
+
+              SELECT * FROM applicants WHERE application_code = 54823 ;"""
 
 
 def query_6():
-    cursor.execute("""UPDATE applicants
-                      SET phone_number = '003670/223-7459'
-                      WHERE first_name = 'Jemima' AND last_name = 'Foreman';""")
-    cursor.execute("""SELECT first_name, last_name, phone_number FROM applicants
-                      WHERE first_name = 'Jemima' AND last_name = 'Foreman';""")
-    table = cursor.fetchall()
-    consol_functions.pprint_table(table)
+    return """UPDATE applicants
+              SET phone_number = '003670/223-7459'
+              WHERE first_name = 'Jemima' AND last_name = 'Foreman';
+
+              SELECT first_name, last_name, phone_number FROM applicants
+              WHERE first_name = 'Jemima' AND last_name = 'Foreman';"""
 
 
 def query_7():
-    cursor.execute("""DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';""")
-    table = ('We deleted the requested data!')
-    consol_functions.pprint_table(table)
+    return """DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';"""

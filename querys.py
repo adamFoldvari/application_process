@@ -1,24 +1,32 @@
 import psycopg2
 import consol_functions
 
+
 try:
     # setup connection string
     connect_str = "dbname='foldadam' user='adamfoldvari' host='localhost' password='9947ADam'"
     # use our connection values to establish a connection
-    conn = psycopg2.connect(connect_str)
+    connection = psycopg2.connect(connect_str)
     # set autocommit option, to do every query when we call it
-    conn.autocommit = True
+    connection.autocommit = True
     # create a psycopg2 cursor that can execute queries
-    cursor = conn.cursor()
+    cursor = connection.cursor()
+
 except Exception as e:
     print("Uh oh, can't connect. Invalid dbname, user or password?")
     print(e)
+
+
+def close_connection():
+    if connection:
+        connection.close()
 
 
 def query_1():
     cursor.execute("""SELECT first_name, last_name FROM mentors;""")
     table = cursor.fetchall()
     consol_functions.pprint_table(table)
+    close_connection()
 
 
 def query_2():
@@ -60,7 +68,6 @@ def query_6():
 
 
 def query_7():
-    cursor.execute("""DELETE FROM applicants
-                    WHERE email LIKE '%mauriseu.net';""")
-    table = cursor.fetchall()
+    cursor.execute("""DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';""")
+    table = ('We deleted the requested data!')
     consol_functions.pprint_table(table)

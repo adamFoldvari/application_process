@@ -1,5 +1,4 @@
 
-
 def pprint_table(table):
     print("\033c")
     for rows in table:

@@ -28,6 +28,7 @@ def main():
         elif menu_number == 7:
             querys.query_7()
             menu_switcher = consol_functions.back_or_exit()
+    querys.close_connection
 
 
 if __name__ == '__main__':

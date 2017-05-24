@@ -1,72 +1,47 @@
 import psycopg2
 import consol_functions
+from database_connection_data import db_con_data
 
 
-def query_handler(query_index):
-    all_query = [query_1(),
-                 query_2(),
-                 query_3(),
-                 query_4(),
-                 query_5(),
-                 query_6(),
-                 query_7()
-                 ]
+def query_handler(query_name):
+    all_query = {'query_1': """SELECT first_name, last_name FROM mentors;""",
+
+                 'query_2': """SELECT nick_name FROM mentors WHERE city = 'Miskolc';""",
+
+                 'query_3': """SELECT first_name ||' '|| last_name, phone_number
+                             FROM applicants WHERE first_name = 'Carol';""",
+
+                 'query_4': """SELECT first_name ||' '|| last_name, phone_number
+                              FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';""",
+
+                 'query_5': """INSERT INTO applicants (first_name, last_name, phone_number, email, application_code)
+                               VALUES ('Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823);
+                               SELECT * FROM applicants WHERE application_code = 54823 ;""",
+
+                 'query_6': """UPDATE applicants SET phone_number = '003670/223-7459'
+                               WHERE first_name = 'Jemima' AND last_name = 'Foreman';
+                               SELECT first_name, last_name, phone_number FROM applicants
+                               WHERE first_name = 'Jemima' AND last_name = 'Foreman';""",
+
+                 'query_7': """DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';""",
+                 }
+
     try:
         connection = None
-        connect_str = "dbname='foldadam' user='adamfoldvari' host='localhost' password='9947ADam'"
+        connect_str = "dbname={} user={} host='localhost'".format(
+            db_con_data()['dbname'], db_con_data()['user'])
         connection = psycopg2.connect(connect_str)
         connection.autocommit = True
         cursor = connection.cursor()
-        cursor.execute(all_query[query_index])
+        cursor.execute(all_query[query_name])
         table = cursor.fetchall()
         consol_functions.pprint_table(table)
     except psycopg2.OperationalError as exception:
-        print('Wrong username or password!')
+        consol_functions.exception_handler('OperationalError')
     except psycopg2.ProgrammingError as exception:
-        print("\033c")
-        print(exception)
-        print('We did the requested query, but nothing to print')
+        consol_functions.exception_handler('ProgrammingError')
     except psycopg2.IntegrityError as exception:
-        print("\033c")
-        print('We already added this row before!')
+        consol_functions.exception_handler('IntegrityError')
     finally:
         if connection:
             connection.close()
-
-
-def query_1():
-    return """SELECT first_name, last_name FROM mentors;"""
-
-
-def query_2():
-    return """SELECT nick_name FROM mentors WHERE city = 'Miskolc';"""
-
-
-def query_3():
-    return """SELECT first_name ||' '|| last_name, phone_number
-                      FROM applicants WHERE first_name = 'Carol';"""
-
-
-def query_4():
-    return """SELECT first_name ||' '|| last_name, phone_number
-                      FROM applicants WHERE email LIKE '%@adipiscingenimmi.edu';"""
-
-
-def query_5():
-    return """INSERT INTO applicants (first_name, last_name, phone_number, email, application_code)
-                      VALUES ('Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823);
-
-              SELECT * FROM applicants WHERE application_code = 54823 ;"""
-
-
-def query_6():
-    return """UPDATE applicants
-              SET phone_number = '003670/223-7459'
-              WHERE first_name = 'Jemima' AND last_name = 'Foreman';
-
-              SELECT first_name, last_name, phone_number FROM applicants
-              WHERE first_name = 'Jemima' AND last_name = 'Foreman';"""
-
-
-def query_7():
-    return """DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';"""

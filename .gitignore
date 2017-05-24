@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Personal database connection data file
+database_connection_data.py
+
 # C extensions
 *.so
 

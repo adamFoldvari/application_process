@@ -1,5 +1,15 @@
 import consol_functions
 import querys
+from flask import Flask, render_template, url_for, redirect
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def menu():
+    links = ['/mentor']
+    query_names = ['Mentors']
+    return render_template('menu.html', links=links, query_names=query_names)
 
 
 def main():
@@ -33,4 +43,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    app.run(debug=True)

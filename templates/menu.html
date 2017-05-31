@@ -7,7 +7,7 @@
   </head>
 
   <body>
-    {% for link, query_name in links, query_names %}
-        <a href={{link}}> {{query_name}} </a> <br>
-    {% endfor % }
+    {% for link in links %}
+        <a href={{link}}> {{query_names[loop.index0]}} </a> <br>
+    {% endfor %}
   </body>

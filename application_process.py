@@ -14,9 +14,8 @@ def menu():
 
 @app.route('/mentors')
 def mentors():
-    query_result = querys.first_test_query()
-    print(query_result)
-    return render_template('query_result.html', query_result=query_result)
+    query_result, query_header = querys.mentors_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
 
 
 if __name__ == '__main__':

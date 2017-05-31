@@ -20,14 +20,22 @@ def make_connection():
         consol_functions.exception_handler('IntegrityError')
 
 
-def close_connection(connection):
-    if connection:
-        connection.close()
+def query_executor(query):
+    try:
+        cursor, connection = make_connection()
+        cursor.execute(query)
+        table = cursor.fetchall()
+        # header = [description for description in cursor.description]
+        header = []
+        return table, header
+    except Exception as e:
+        print(e)
+    finally:
+        if connection:
+            connection.close()
 
 
-def first_test_query():
-    cursor, connection = make_connection()
-    cursor.execute("""SELECT first_name, last_name FROM mentors;""")
-    table = cursor.fetchall()
-    close_connection(connection)
-    return table
+def mentors_query():
+    query = ("""SELECT first_name, last_name FROM mentors;""")
+    table, header = query_executor(query)
+    return table, header

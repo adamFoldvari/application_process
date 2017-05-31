@@ -24,9 +24,7 @@ def query_executor(query):
         cursor, connection = make_connection()
         cursor.execute(query)
         table = cursor.fetchall()
-        # header = [description for description in cursor.description]
-        header = []
-        # print(table)
+        header = [description[0] for description in cursor.description]
         return table, header
     except Exception as e:
         print(e)

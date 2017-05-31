@@ -18,5 +18,17 @@ def mentors():
     return render_template('query_result.html', query_result=query_result, query_header=query_header)
 
 
+@app.route('/all-school')
+def all_school():
+    query_result, query_header = querys.all_school_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
+
+
+@app.route('/mentors-by-country')
+def mentors_by_country():
+    query_result, query_header = querys.mentor_by_country_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

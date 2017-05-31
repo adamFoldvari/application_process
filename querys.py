@@ -27,6 +27,7 @@ def query_executor(query):
         table = cursor.fetchall()
         # header = [description for description in cursor.description]
         header = []
+        # print(table)
         return table, header
     except Exception as e:
         print(e)
@@ -36,6 +37,26 @@ def query_executor(query):
 
 
 def mentors_query():
-    query = ("""SELECT first_name, last_name FROM mentors;""")
+    query = ("""SELECT mentors.first_name, mentors.last_name, schools.name, schools.country
+                FROM mentors
+                JOIN schools USING (city);""")
+    table, header = query_executor(query)
+    return table, header
+
+
+def all_school_query():
+    query = ("""SELECT mentors.first_name, mentors.last_name, schools.name, schools.country
+                FROM mentors
+                RIGHT JOIN schools USING (city)
+                ORDER BY mentors.id;""")
+    table, header = query_executor(query)
+    return table, header
+
+
+def mentor_by_country_query():
+    query = ("""SELECT country, COUNT(mentors.id) AS count
+                FROM schools
+                JOIN mentors USING (city)
+                GROUP BY country;""")
     table, header = query_executor(query)
     return table, header

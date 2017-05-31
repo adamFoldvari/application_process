@@ -78,3 +78,13 @@ def applicant_query():
                 ORDER BY creation_date DESC;""")
     table, header = query_executor(query)
     return table, header
+
+
+def applicants_and_mentors_query():
+    query = ("""SELECT applicants.first_name, applicants.application_code, mentors.first_name, mentors.last_name
+                FROM applicants
+                LEFT JOIN applicants_mentors ON applicants.id = applicants_mentors.applicant_id
+                    LEFT JOIN mentors ON applicants_mentors.mentor_id = mentors.id
+                ORDER BY applicants.id;""")
+    table, header = query_executor(query)
+    return table, header

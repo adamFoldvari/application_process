@@ -42,5 +42,11 @@ def applicants():
     return render_template('query_result.html', query_result=query_result, query_header=query_header)
 
 
+@app.route('/applicants-and-mentors')
+def applicants_and_metors():
+    query_result, query_header = querys.applicants_and_mentors_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

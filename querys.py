@@ -60,3 +60,11 @@ def mentor_by_country_query():
                 GROUP BY country;""")
     table, header = query_executor(query)
     return table, header
+
+
+def contacts_query():
+    query = ("""SELECT schools.name, mentors.first_name, mentors.last_name
+                FROM schools
+                JOIN mentors ON mentors.id = schools.contact_person;""")
+    table, header = query_executor(query)
+    return table, header

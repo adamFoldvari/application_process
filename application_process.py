@@ -30,5 +30,12 @@ def mentors_by_country():
     return render_template('query_result.html', query_result=query_result, query_header=query_header)
 
 
+@app.route('/contacts')
+def contacts():
+    query_result, query_header = querys.contacts_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

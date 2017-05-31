@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Application process</title>
+  </head>
+
+  <body>
+    {% for link, query_name in links, query_names %}
+        <a href={{link}}> {{query_name}} </a> <br>
+    {% endfor % }
+  </body>

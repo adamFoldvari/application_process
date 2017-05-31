@@ -36,6 +36,11 @@ def contacts():
     return render_template('query_result.html', query_result=query_result, query_header=query_header)
 
 
+@app.route('/applicants')
+def applicants():
+    query_result, query_header = querys.applicant_query()
+    return render_template('query_result.html', query_result=query_result, query_header=query_header)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

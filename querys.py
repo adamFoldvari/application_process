@@ -68,3 +68,13 @@ def contacts_query():
                 JOIN mentors ON mentors.id = schools.contact_person;""")
     table, header = query_executor(query)
     return table, header
+
+
+def applicant_query():
+    query = ("""SELECT applicants.first_name, applicants.application_code, applicants_mentors.creation_date
+                FROM applicants
+                JOIN applicants_mentors ON applicants.id = applicants_mentors.applicant_id
+                WHERE applicants_mentors.creation_date > '2016/1/1'
+                ORDER BY creation_date DESC;""")
+    table, header = query_executor(query)
+    return table, header

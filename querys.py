@@ -1,5 +1,4 @@
 import psycopg2
-import consol_functions
 from database_connection_data import db_con_data
 
 
